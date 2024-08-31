@@ -2,24 +2,14 @@ package com.commandcenter;
 
 import java.util.Collection;
 
-import com.commandcenter.IAction.CommandCenterAction;
-import com.commandcenter.IProcessor.IHandler;
-import com.commandcenter.IWorkflowOrchestrator.ICommandCenterDelegates;
-import com.commandcenter.IWorkflowOrchestrator.ICommandCenterModel;
+import com.commandcenter.action.IHandler;
+import com.commandcenter.action.IProcessor;
 
 public interface IWorkflowOrchestrator<M extends ICommandCenterModel<D>, D extends ICommandCenterDelegates>
-        extends ICommandCenter<M, CommandCenterAction, Void, Void>, IHandler<M, CommandCenterAction> {
-
-    public static interface ICommandCenterDelegates {
-
-    }
-
-    public static interface ICommandCenterModel<D extends ICommandCenterDelegates> {
-
-    }
+        extends ICommandCenter<M, Void, Void>, IHandler<M> {
 
     public abstract static class WorkflowOrchestrator<M extends ICommandCenterModel<D>, D extends ICommandCenterDelegates>
-            extends CommandCenter<M, CommandCenterAction, Void, Void>
+            extends CommandCenter<M, Void, Void>
             implements IWorkflowOrchestrator<M, D> {
 
         private final D delegates;
@@ -34,10 +24,10 @@ public interface IWorkflowOrchestrator<M extends ICommandCenterModel<D>, D exten
             return delegates;
         }
 
-        protected abstract Collection<Class<? extends ICommandCenter<M, ? extends IAction, ?, ?>>> getCommandCenters();
+        protected abstract Collection<Class<? extends ICommandCenter<M, ?, ?>>> getCommandCenters();
 
         @Override
-        public <P extends IProcessor<M, ?, ?, ?>> P register(Class<P> commandClass) {
+        public <P extends IProcessor<M, ?, ?>> P register(Class<P> commandClass) {
             try {
 
                 return commandClass.getConstructor(getModel().getClass()).newInstance(getModel());
@@ -48,12 +38,12 @@ public interface IWorkflowOrchestrator<M extends ICommandCenterModel<D>, D exten
         }
 
         @Override
-        public Collection<Class<? extends IProcessor<M, CommandCenterAction, ?, ?>>> getProcessors() {
+        public Collection<Class<? extends IProcessor<M, ?, ?>>> getProcessors() {
             return (Collection) getCommandCenters();
         }
 
         @Override
-        public IProcessor<M, ?, ?, ?> getParent() {
+        public IProcessor<M, ?, ?> getParent() {
             return null;
         }
     }

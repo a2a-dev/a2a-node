@@ -7,16 +7,14 @@ package com.a2a;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import com.a2a.IA2aOrchestrator.A2aCommandCenterModel;
 import com.a2a.IA2aOrchestrator.IA2aCCDelegates;
-import com.commandcenter.IAction;
-import com.commandcenter.IAction.DataDelegate;
-import com.commandcenter.IAction.UIDesignDelegate;
 import com.commandcenter.ICommandCenter;
-import com.commandcenter.IProcessor;
+import com.commandcenter.ICommandCenterDelegates;
+import com.commandcenter.ICommandCenterModel;
 import com.commandcenter.IWorkflowOrchestrator;
-import com.commandcenter.IWorkflowOrchestrator.ICommandCenterDelegates;
-import com.commandcenter.IWorkflowOrchestrator.ICommandCenterModel;
+import com.commandcenter.action.IProcessor;
 
 /**
  *
@@ -57,13 +55,13 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<A2aCommandCenter
         }
 
         @Override
-        protected Collection<Class<? extends ICommandCenter<A2aCommandCenterModel, ? extends IAction, ?, ?>>> getCommandCenters() {
+        protected Collection<Class<? extends ICommandCenter<A2aCommandCenterModel, ?, ?>>> getCommandCenters() {
             return Arrays.asList(A2aUiDesignCommandCenter.class, A2aDataCommandCenter.class);
         }
     }
 
     public static class A2aUiDesignCommandCenter
-            extends CommandCenter<A2aCommandCenterModel, UIDesignDelegate, Void, Void> {
+            extends CommandCenter<A2aCommandCenterModel, Void, Void> {
 
         public A2aUiDesignCommandCenter(A2aCommandCenterModel model) {
             super(model);
@@ -75,14 +73,14 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<A2aCommandCenter
         }
 
         @Override
-        public Collection<Class<? extends IProcessor<A2aCommandCenterModel, UIDesignDelegate, ?, ?>>> getProcessors() {
+        public Collection<Class<? extends IProcessor<A2aCommandCenterModel, ?, ?>>> getProcessors() {
             return Arrays.asList(AUIBuilderDelegate.class);
         }
 
     }
 
     public static class A2aDataCommandCenter
-            extends CommandCenter<A2aCommandCenterModel, DataDelegate, Void, Void> {
+            extends CommandCenter<A2aCommandCenterModel, Void, Void> {
         public A2aDataCommandCenter(A2aCommandCenterModel model) {
             super(model);
         }
@@ -93,7 +91,7 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<A2aCommandCenter
         }
 
         @Override
-        public Collection<Class<Collection<Class<? extends IProcessor<A2aCommandCenterModel, DataDelegate, ?, ?>>>>> getProcessors() {
+        public Collection<Class<Collection<Class<? extends IProcessor<A2aCommandCenterModel, ?, ?>>>>> getProcessors() {
             return Arrays.asList();
         }
 
