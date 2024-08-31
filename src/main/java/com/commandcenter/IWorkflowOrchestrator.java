@@ -1,18 +1,28 @@
 package com.commandcenter;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.commandcenter.action.IHandler;
 import com.commandcenter.action.IProcessor;
+import com.commandcenter.action.IProcessor.IHandler;
 
-public interface IWorkflowOrchestrator<M extends ICommandCenterModel<D>, D extends ICommandCenterDelegates>
-        extends ICommandCenter<M, Void, Void>, IHandler<M> {
+public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
+        extends ICommandCenter<D, M, Void>, IHandler<D, M> {
 
-    public abstract static class WorkflowOrchestrator<M extends ICommandCenterModel<D>, D extends ICommandCenterDelegates>
-            extends CommandCenter<M, Void, Void>
-            implements IWorkflowOrchestrator<M, D> {
+    public static interface IUIDelegate {
 
+    }
+
+    public static interface IDataDelegate {
+
+    }
+
+    public abstract static class WorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
+            extends CommandCenter<D, M, Void>
+            implements IWorkflowOrchestrator<D, M> {
         private final D delegates;
+        private Map<Class<? extends IProcessor<D, M, ?, ?>>, Object> register = new HashMap<>();
 
         public WorkflowOrchestrator(M model, D delegates) {
             super(model);
@@ -24,26 +34,31 @@ public interface IWorkflowOrchestrator<M extends ICommandCenterModel<D>, D exten
             return delegates;
         }
 
-        protected abstract Collection<Class<? extends ICommandCenter<M, ?, ?>>> getCommandCenters();
-
         @Override
-        public <P extends IProcessor<M, ?, ?>> P register(Class<P> commandClass) {
+        public <P extends IProcessor<D, M, ?, ?>> P getHandler(
+                Class<P> clazz) {
             try {
-
-                return commandClass.getConstructor(getModel().getClass()).newInstance(getModel());
-
+                if (register.containsKey(clazz)) {
+                    return (P) register.get(clazz);
+                }
+                P newInstance = clazz.getConstructor(getModel().getClass()).newInstance(getModel());
+                newInstance.setParent(this);
+                register.put(clazz, newInstance);
+                return newInstance;
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
 
+        protected abstract Collection<Class<? extends ICommandCenter<D, M, ?>>> getCommandCenters();
+
         @Override
-        public Collection<Class<? extends IProcessor<M, ?, ?>>> getProcessors() {
+        public Collection<Class<? extends IProcessor<D, M, ?, ?>>> getProcessors() {
             return (Collection) getCommandCenters();
         }
 
         @Override
-        public IProcessor<M, ?, ?> getParent() {
+        public IProcessor<D, M, ?, ?> getParent() {
             return null;
         }
     }

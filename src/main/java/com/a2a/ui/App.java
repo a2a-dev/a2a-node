@@ -1,6 +1,6 @@
 package com.a2a.ui;
 
-import com.a2a.IA2aOrchestrator.A2aOrchestrator;
+import com.a2a.A2aOrchestrator;
 
 import javafx.application.Application;
 

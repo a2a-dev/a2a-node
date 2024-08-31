@@ -3,23 +3,48 @@ package com.commandcenter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.concurrent.CompletableFuture;
 
-import com.commandcenter.action.IAction.CommandCenterAction;
+import com.commandcenter.action.IAction.ICommandCenterAction;
+import com.commandcenter.action.IAction.Lazy;
 import com.commandcenter.action.IProcessor;
 
-public interface ICommandCenter<M extends ICommandCenterModel<? extends ICommandCenterDelegates>, I, O>
-        extends CommandCenterAction<M, I, O> {
+public interface ICommandCenter<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
+        extends ICommandCenterAction<D, M, I> {
+    <P extends IProcessor<D, M, ?, ?>> Collection<Class<P>> getProcessors();
 
-    <P extends IProcessor<M, ?, ?>> P register(Class<P> commandClass);
+    public <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> commandClass, W with);
 
-    <P extends IProcessor<M, ?, ?>> Collection<Class<P>> getProcessors();
+    public default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> commandClass) {
+        return go(commandClass, null);
+    }
 
-    public abstract static class CommandCenter<M extends ICommandCenterModel<? extends ICommandCenterDelegates>, I, O>
-            extends Processor<M, I, O>
-            implements ICommandCenter<M, I, O> {
+    public default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> commandClass, W with) {
+        return CompletableFuture.supplyAsync(() -> goSync(commandClass, with));
+
+    }
+
+    public default <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> commandClass) {
+        return goSync(commandClass, null);
+    }
+
+    public abstract static class CommandCenter<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
+            extends Consumer<D, M, I>
+            implements ICommandCenter<D, M, I> {
 
         public CommandCenter(M model) {
             super(model);
+            getProcessors().stream().filter(c -> isNotLazy(c)).forEach(p -> getHandler(p));
+
+        }
+
+        @Override
+        public <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> commandClass, W with) {
+            return getHandler(commandClass).process(null);
+        }
+
+        private boolean isNotLazy(Class<IProcessor<D, M, ?, ?>> c) {
+            return !Lazy.class.isAssignableFrom(c);
         }
 
         public static Type findNthTypeParameter(Class<?> clazz, int n) {
@@ -32,15 +57,6 @@ public interface ICommandCenter<M extends ICommandCenterModel<? extends ICommand
                 }
             }
             return null;
-        }
-
-        @Override
-        public <P extends IProcessor<M, ?, ?>> P register(Class<P> commandClass) {
-            try {
-                return commandClass.getConstructor(getModel().getClass()).newInstance(getModel());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         }
 
     }
