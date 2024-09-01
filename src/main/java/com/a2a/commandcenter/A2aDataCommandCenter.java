@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
-import com.a2a.commandcenter.data.EventPollerDataDelegate;
+import com.a2a.commandcenter.data.EventPoller;
 import com.a2a.commandcenter.data.SubscriberDataDelegate;
 import com.commandcenter.ICommandCenter.CommandCenter;
 import com.commandcenter.action.IAction.IDataAction;
@@ -19,7 +19,7 @@ public class A2aDataCommandCenter
     @Override
     public void consume(Void input) {
         go(SubscriberDataDelegate.class);
-        go(EventPollerDataDelegate.class);
+        go(EventPoller.class);
     }
 
     @Override

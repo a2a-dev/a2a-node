@@ -1,16 +1,17 @@
-package com.a2a.commandcenter.model.data;
+package com.a2a.commandcenter.ui;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.model.data.UIInstruction;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionParameter;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.commandcenter.action.IProcessor.Processor;
+import com.commandcenter.action.IProcessor.AProcessor;
 
-public class ReadHandler  extends Processor<IA2aCCDelegates, A2aCommandCenterModel, ActionParameter, ActionResult> {
+public class MoveHandler extends AProcessor<IA2aCCDelegates, A2aCommandCenterModel, ActionParameter, ActionResult> {
 
-    public ReadHandler(A2aCommandCenterModel model) {
+    public MoveHandler(A2aCommandCenterModel model) {
         super(model);
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     @Override

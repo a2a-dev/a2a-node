@@ -1,21 +1,23 @@
-package com.a2a.commandcenter.model.data;
+package com.a2a.commandcenter.ui;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.model.data.UIInstruction;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionParameter;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.commandcenter.action.IProcessor.Processor;
+import com.commandcenter.action.IProcessor.AProcessor;
 
-public class ScrollHandler extends Processor<IA2aCCDelegates, A2aCommandCenterModel, ActionParameter, ActionResult> {
+public class DoubleClickHandler
+        extends AProcessor<IA2aCCDelegates, A2aCommandCenterModel, ActionParameter, ActionResult> {
 
-    public ScrollHandler(A2aCommandCenterModel model) {
+    public DoubleClickHandler(A2aCommandCenterModel model) {
         super(model);
-        // TODO Auto-generated constructor stub
+
     }
 
     @Override
     public ActionResult process(ActionParameter input) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'process'");
     }
 

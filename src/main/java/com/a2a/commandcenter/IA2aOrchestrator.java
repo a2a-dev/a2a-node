@@ -6,12 +6,15 @@
 package com.a2a.commandcenter;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
 import com.a2a.commandcenter.model.data.NodeInit;
-import com.a2a.commandcenter.model.data.RightClickInstruction;
+import com.a2a.commandcenter.model.data.PollerConfig;
 import com.a2a.commandcenter.model.data.ServerInit;
+import com.a2a.commandcenter.model.data.UIInstruction;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
+import com.a2a.commandcenter.ui.RightClickInstruction;
 import com.commandcenter.ICommandCenterDelegates;
 import com.commandcenter.ICommandCenterModel;
 import com.commandcenter.IWorkflowOrchestrator;
@@ -22,6 +25,7 @@ import com.commandcenter.IWorkflowOrchestrator;
  */
 
 public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates, A2aCommandCenterModel> {
+
     public static interface IA2aCommandCenterModel extends ICommandCenterModel<IA2aCCDelegates> {
     }
 
@@ -35,11 +39,13 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates,
         void createLayout();
 
         CompletableFuture<ActionResult> processRightClick(RightClickInstruction rightClickInstruction);
-
     }
 
     public interface Ia2aDataDelegate extends IDataDelegate {
 
         ServerInit registerNode(NodeInit input);
+
+        void registerPollerFunction(Consumer<UIInstruction> pollerFunction, PollerConfig pollerConfig);
+
     }
 }

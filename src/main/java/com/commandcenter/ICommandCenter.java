@@ -14,7 +14,7 @@ public interface ICommandCenter<D extends ICommandCenterDelegates, M extends ICo
     Collection<Class<? extends T>> getProcessors();
 
     public abstract static class CommandCenter<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, T extends IProcessor<D, M, ?, ?>, I>
-            extends Consumer<D, M, I>
+            extends AConsumer<D, M, I>
             implements ICommandCenter<D, M, T, I> {
 
         public CommandCenter(M model) {

@@ -58,7 +58,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
         }
     }
 
-    public abstract static class Processor<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
+    public abstract static class AProcessor<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
             implements IProcessor<D, M, I, O> {
 
         private final M model;
@@ -71,7 +71,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
             this.parent = parent;
         }
 
-        public Processor(M model) {
+        public AProcessor(M model) {
             this.model = model;
         }
 
@@ -95,10 +95,10 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
             handle();
         }
 
-        public abstract static class Handler<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
-                extends Processor<D, M, Void, Void>
+        public abstract static class AHandler<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
+                extends AProcessor<D, M, Void, Void>
                 implements IHandler<D, M> {
-            public Handler(M model) {
+            public AHandler(M model) {
                 super(model);
             }
         }
@@ -113,10 +113,10 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
             return produce();
         }
 
-        public abstract static class Producer<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, O>
-                extends Processor<D, M, Void, O>
+        public abstract static class AProducer<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, O>
+                extends AProcessor<D, M, Void, O>
                 implements IProducer<D, M, O> {
-            public Producer(M model) {
+            public AProducer(M model) {
                 super(model);
             }
         }
@@ -132,10 +132,10 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
             return null;
         }
 
-        public abstract static class Consumer<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
-                extends Processor<D, M, I, Void>
+        public abstract static class AConsumer<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
+                extends AProcessor<D, M, I, Void>
                 implements IConsumer<D, M, I> {
-            public Consumer(M model) {
+            public AConsumer(M model) {
                 super(model);
             }
         }
