@@ -10,7 +10,7 @@ public class TestA2aUIDelegate implements Ia2aUIDelegate {
 
     @Override
     public void createLayout() {
-        System.out.println("Creating layout");
+        System.out.println("Creating layout-----------------");
     }
 
     @Override

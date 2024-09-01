@@ -34,7 +34,8 @@ public class KeyUtil {
 
     public static Map<String, RegionRect> readRegionRects(String config, String resol) throws IOException {
         Gson g = new Gson();
-        InputStream resource = KeyUtil.class.getClassLoader().getResourceAsStream("./" + config + "/" + resol + "_region.json");
+        InputStream resource = KeyUtil.class.getClassLoader()
+                .getResourceAsStream("./" + config + "/" + resol + "_region.json");
         Map<String, RegionRect> regionRects = new HashMap<>();
         if (resource != null) {
             regionRects.putAll(parseRects(g, resource));
@@ -50,7 +51,8 @@ public class KeyUtil {
 
         return regionRects;
     }
-   private static Map<String, RegionRect> parseRects(Gson g, InputStream resource) {
+
+    private static Map<String, RegionRect> parseRects(Gson g, InputStream resource) {
         Type collectionType = new TypeToken<Map<String, RegionRect>>() {
         }.getType();
         Map<String, RegionRect> regionRects = g.fromJson(new InputStreamReader(resource), collectionType);
@@ -66,7 +68,9 @@ public class KeyUtil {
         sleep(1000);
 
     }
-      public static void writeRegionRects(Map<String, RegionRect> regionRects, String config, String resol) throws IOException {
+
+    public static void writeRegionRects(Map<String, RegionRect> regionRects, String config, String resol)
+            throws IOException {
         Gson g = new Gson();
         File file = new File("./" + config + "/" + resol + "_region.json");
         if (file.exists()) {
@@ -108,7 +112,7 @@ public class KeyUtil {
     }
 
     public static void log(Object string) {
-        // System.out.println(string);
+        // CCLogUitl.verbose(string);
     }
 
     public static Region create(String name, boolean captureMode) {
@@ -157,7 +161,8 @@ public class KeyUtil {
         Stage stage = new Stage();
         Pane root = new Pane();
         ImageView img = new ImageView();
-        img.setImage(new Image(getClass().getResource("pathToYourPngLocatedInYourResourcesFolder.png").toExternalForm()));
+        img.setImage(
+                new Image(getClass().getResource("pathToYourPngLocatedInYourResourcesFolder.png").toExternalForm()));
         root.getChildren().add(img);
         Scene scene = new Scene(root, 500, 500);
         scene.setFill(Color.TRANSPARENT);

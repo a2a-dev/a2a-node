@@ -12,6 +12,7 @@ public class TestA2aDataDelegate implements Ia2aDataDelegate {
 
     @Override
     public ServerInit registerNode(NodeInit input) {
+        System.out.println("Registering node--------------");
         return new ServerInit();
     }
 

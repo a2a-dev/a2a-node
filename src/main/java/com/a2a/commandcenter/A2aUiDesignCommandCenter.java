@@ -6,6 +6,7 @@ import java.util.Collection;
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
 import com.a2a.commandcenter.ui.AUIBuilderAction;
 import com.commandcenter.ICommandCenter.CommandCenter;
+import com.commandcenter.action.CCLogUtil;
 import com.commandcenter.action.IAction.IUIDesignAction;
 
 public class A2aUiDesignCommandCenter
@@ -18,7 +19,7 @@ public class A2aUiDesignCommandCenter
 
     @Override
     public void consume(Void input) {
-        System.out.println("A2aUiDesignCommandCenter.consume()");
+        CCLogUtil.verbose("A2aUiDesignCommandCenter.consume()");
         go(AUIBuilderAction.class);
     }
 

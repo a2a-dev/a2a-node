@@ -7,31 +7,33 @@ import com.commandcenter.ICommandCenterModel;
 
 public interface IProcessor<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O> {
 
-    public O process(I input);
+    O process(I input);
 
-    public default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType) {
+    default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType) {
         return go(actionType, null);
     }
 
-    public default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType, W with) {
-        return CompletableFuture.supplyAsync(() -> goSync(actionType, with)).exceptionally(
+    default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType, W with) {
+        CompletableFuture<R> supplyAsync = CompletableFuture.supplyAsync(() -> goSync(actionType, with));
+        CompletableFuture<R> exceptionally = supplyAsync.exceptionally(
                 (e) -> {
                     e.printStackTrace();
                     return null;
                 });
+        return supplyAsync;
     }
 
-    public default <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> actionType) {
+    default <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> actionType) {
         return goSync(actionType, null);
     }
 
-    public default <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> actionType, W with) {
+    default <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> actionType, W with) {
         return getHandler(actionType).process(with);
     }
 
-    public default D getDelegates() {
+    default D getDelegates() {
         if (getModel() != null) {
-            System.out.println("getDelegates() method is expected to be overridden in the root ");
+            CCLogUtil.verbose("getDelegates() method is expected to be overridden in the root ");
             return getParent().getDelegates();
         } else {
             throw new IllegalStateException("getDelegates() method is expected to be overridden in the root ");
@@ -41,18 +43,18 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
     default <H extends IProcessor<D, M, ?, ?>> H getHandler(
             Class<H> clazz) {
         if (getParent() != null) {
-            System.out.println("get Handler for " + clazz.getName());
+            CCLogUtil.verbose("get Handler for " + clazz.getName());
             return getParent().getHandler(clazz);
         } else {
             throw new IllegalStateException("getHandler() method is expected to be overridden in the root ");
         }
     }
 
-    default public void register() {
+    default void register() {
 
     }
 
-    public default M getModel() {
+    default M getModel() {
         if (getParent() != null) {
             return getParent().getModel();
         } else {
