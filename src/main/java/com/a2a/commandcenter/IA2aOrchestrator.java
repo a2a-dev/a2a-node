@@ -5,7 +5,6 @@
 
 package com.a2a.commandcenter;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
@@ -14,7 +13,7 @@ import com.a2a.commandcenter.model.data.PollerConfig;
 import com.a2a.commandcenter.model.data.ServerInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.a2a.commandcenter.ui.RightClickInstruction;
+import com.a2a.commandcenter.model.ui.RightClickInstruction;
 import com.commandcenter.ICommandCenterDelegates;
 import com.commandcenter.ICommandCenterModel;
 import com.commandcenter.IWorkflowOrchestrator;
@@ -38,7 +37,7 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates,
     public interface Ia2aUIDelegate extends IUIDelegate {
         void createLayout();
 
-        CompletableFuture<ActionResult> processRightClick(RightClickInstruction rightClickInstruction);
+        ActionResult processRightClick(RightClickInstruction rightClickInstruction);
     }
 
     public interface Ia2aDataDelegate extends IDataDelegate {

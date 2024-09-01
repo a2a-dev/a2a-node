@@ -2,10 +2,12 @@ package com.commandcenter;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
-import com.commandcenter.action.IProcessor;
 import com.commandcenter.action.IAction.ICommandCenterAction;
+import com.commandcenter.action.IProcessor;
 import com.commandcenter.action.IProcessor.IHandler;
 
 public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
@@ -24,11 +26,17 @@ public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M exte
             implements IWorkflowOrchestrator<D, M> {
         private final D delegates;
         private Map<Class<? extends IProcessor<D, M, ?, ?>>, Object> register;
+        private final Collection<CompletableFuture<?>> threads = new LinkedList<>();
 
         public WorkflowOrchestrator(M model, D delegates) {
             super(model);
             this.delegates = delegates;
 
+        }
+
+        @Override
+        public Collection<CompletableFuture<?>> getThreads() {
+            return threads;
         }
 
         @Override

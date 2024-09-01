@@ -4,7 +4,7 @@ import java.util.concurrent.CompletableFuture;
 
 import com.a2a.commandcenter.IA2aOrchestrator.Ia2aUIDelegate;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.a2a.commandcenter.ui.RightClickInstruction;
+import com.a2a.commandcenter.model.ui.RightClickInstruction;
 
 public class TestA2aUIDelegate implements Ia2aUIDelegate {
 

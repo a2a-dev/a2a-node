@@ -1,5 +1,6 @@
 package com.commandcenter.action;
 
+import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 import com.commandcenter.ICommandCenterDelegates;
@@ -20,7 +21,16 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
                     e.printStackTrace();
                     return null;
                 });
+        getThreads().add(supplyAsync);
         return supplyAsync;
+    }
+
+    default Collection<CompletableFuture<?>> getThreads(){
+        if (getParent() != null) {
+            return getParent().getThreads();
+        } else {
+            throw new IllegalStateException("getThreads() method is expected to be overridden in the root ");
+        }
     }
 
     default <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> actionType) {

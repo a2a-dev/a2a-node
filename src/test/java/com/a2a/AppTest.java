@@ -1,5 +1,8 @@
 package com.a2a;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import com.a2a.commandcenter.A2aOrchestrator;
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
 
@@ -39,6 +42,14 @@ public class AppTest extends TestCase {
 
     public static void main(String[] args) {
         IA2aCCDelegates delegates = new TestA2aCCDelegates();
-        A2aOrchestrator.getInstance(delegates).handle();
+        A2aOrchestrator instance = A2aOrchestrator.getInstance(delegates);
+        instance.handle();
+        try {
+            CompletableFuture.allOf(instance.getThreads().toArray(new CompletableFuture[instance.getThreads().size()]))
+                    .get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
     }
 }

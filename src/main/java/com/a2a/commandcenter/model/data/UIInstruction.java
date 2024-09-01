@@ -2,17 +2,16 @@ package com.a2a.commandcenter.model.data;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
-import com.a2a.commandcenter.ui.DnDHandler;
-import com.a2a.commandcenter.ui.DoubleClickHandler;
-import com.a2a.commandcenter.ui.KeyInHandler;
-import com.a2a.commandcenter.ui.LeftClickHandler;
-import com.a2a.commandcenter.ui.MoveHandler;
-import com.a2a.commandcenter.ui.ReadHandler;
-import com.a2a.commandcenter.ui.RightCLickHandler;
-import com.a2a.commandcenter.ui.ScreenShotHandler;
-import com.a2a.commandcenter.ui.ScrollHandler;
-import com.a2a.commandcenter.ui.TimerHandler;
-import com.a2a.commandcenter.ui.WaitHandler;
+import com.a2a.commandcenter.data.RightClickInstructionHandler;
+import com.a2a.commandcenter.ui.DnDInstructionHandler;
+import com.a2a.commandcenter.ui.DoubleClickInstructionHandler;
+import com.a2a.commandcenter.ui.KeyInInstructionHandler;
+import com.a2a.commandcenter.ui.LeftClickInstructionHandler;
+import com.a2a.commandcenter.ui.MoveInstructionHandler;
+import com.a2a.commandcenter.ui.ReadInstructionHandler;
+import com.a2a.commandcenter.ui.ScreenShotInstructionHandler;
+import com.a2a.commandcenter.ui.ScrollInstructionHandler;
+import com.a2a.commandcenter.ui.WaitInstructionHandler;
 import com.commandcenter.action.IProcessor;
 
 import lombok.Getter;
@@ -32,6 +31,7 @@ public class UIInstruction {
         RECORD,
         QUEUE,
         PARALLEL,
+        PAUSE,
         CONTINUE,
         RESTART,
         SKIP
@@ -52,7 +52,9 @@ public class UIInstruction {
 
     }
 
-    public class ActionParameter {
+    public static class ActionParameter {
+        // This field is not part of the
+        public transient boolean record;
         public Rectangle location;
         public TypeInstruction[] value;
     }
@@ -84,17 +86,16 @@ public class UIInstruction {
     }
 
     public enum A2aActionType {
-        RIGHT_CLICK(RightCLickHandler.class),
-        LEFT_CLICK(LeftClickHandler.class),
-        DOUBLE_CLICK(DoubleClickHandler.class),
-        TIMER(TimerHandler.class),
-        TYPE(KeyInHandler.class),
-        DND(DnDHandler.class),
-        WAIT(WaitHandler.class),
-        MOVE(MoveHandler.class),
-        SCROLL(ScrollHandler.class),
-        READ(ReadHandler.class),
-        SCREENSHOT(ScreenShotHandler.class),;
+        RIGHT_CLICK(RightClickInstructionHandler.class),
+        LEFT_CLICK(LeftClickInstructionHandler.class),
+        DOUBLE_CLICK(DoubleClickInstructionHandler.class),
+        TYPE(KeyInInstructionHandler.class),
+        DND(DnDInstructionHandler.class),
+        WAIT(WaitInstructionHandler.class),
+        MOVE(MoveInstructionHandler.class),
+        SCROLL(ScrollInstructionHandler.class),
+        READ(ReadInstructionHandler.class),
+        SCREENSHOT(ScreenShotInstructionHandler.class),;
 
         private Class<? extends IProcessor<IA2aCCDelegates, A2aCommandCenterModel, ActionParameter, ActionResult>> handlerType;
 

@@ -1,15 +1,16 @@
-package com.a2a.commandcenter.ui;
+package com.a2a.commandcenter.data;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionParameter;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
+import com.a2a.commandcenter.model.ui.RightClickInstruction;
 import com.commandcenter.action.IAction.IDataAction.DataAction;
 
-public class RightCLickHandler
+public class RightClickInstructionHandler
         extends DataAction<IA2aCCDelegates, A2aCommandCenterModel, ActionParameter, ActionResult> {
 
-    public RightCLickHandler(A2aCommandCenterModel model) {
+    public RightClickInstructionHandler(A2aCommandCenterModel model) {
         super(model);
 
     }
@@ -17,16 +18,15 @@ public class RightCLickHandler
     @Override
     public ActionResult process(ActionParameter input) {
         RightClickInstruction rightClickInstruction = parseRightClickInstruction(input);
-        getDelegates().getUIDelegate().processRightClick(rightClickInstruction).thenAccept(result -> {
-            go(ActionResultDataHandler.class, result);
-        });
-        return null;
+        return getDelegates().getUIDelegate().processRightClick(rightClickInstruction);
 
     }
 
     private RightClickInstruction parseRightClickInstruction(ActionParameter input) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'parseRightClickInstruction'");
+        RightClickInstruction rightClickInstruction = (RightClickInstruction) input;
+
+        return rightClickInstruction;
+
     }
 
 }

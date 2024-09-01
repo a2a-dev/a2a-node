@@ -6,10 +6,10 @@ import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
 import com.a2a.commandcenter.model.data.UIInstruction.Rectangle;
 import com.commandcenter.action.IAction.IUIAction.UIAction;
 
-public class ActionResultDataHandler
+public class ActionResultHandler
         extends UIAction<IA2aCCDelegates, A2aCommandCenterModel, ActionResult, Rectangle> {
 
-    public ActionResultDataHandler(A2aCommandCenterModel model) {
+    public ActionResultHandler(A2aCommandCenterModel model) {
         super(model);
 
     }
