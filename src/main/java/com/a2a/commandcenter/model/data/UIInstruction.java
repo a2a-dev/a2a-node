@@ -52,6 +52,8 @@ public class UIInstruction {
 
     }
 
+    @Getter
+    @Setter
     public static class ActionParameter {
         // This field is not part of the
         public transient boolean record;

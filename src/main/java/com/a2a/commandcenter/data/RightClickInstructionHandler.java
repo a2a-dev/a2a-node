@@ -4,7 +4,7 @@ import com.a2a.commandcenter.A2aCommandCenterModel;
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionParameter;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.a2a.commandcenter.model.ui.RightClickInstruction;
+import com.a2a.commandcenter.model.ui.ClickInstruction;
 import com.commandcenter.action.IAction.IDataAction.DataAction;
 
 public class RightClickInstructionHandler
@@ -17,13 +17,13 @@ public class RightClickInstructionHandler
 
     @Override
     public ActionResult process(ActionParameter input) {
-        RightClickInstruction rightClickInstruction = parseRightClickInstruction(input);
-        return getDelegates().getUIDelegate().processRightClick(rightClickInstruction);
+        ClickInstruction rightClickInstruction = parseRightClickInstruction(input);
+        return getDelegates().getUIDelegate().getUIActionDelegator().doRightClick(rightClickInstruction);
 
     }
 
-    private RightClickInstruction parseRightClickInstruction(ActionParameter input) {
-        RightClickInstruction rightClickInstruction = (RightClickInstruction) input;
+    private ClickInstruction parseRightClickInstruction(ActionParameter input) {
+        ClickInstruction rightClickInstruction = (ClickInstruction) input;
 
         return rightClickInstruction;
 

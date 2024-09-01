@@ -1,10 +1,7 @@
 package com.a2a;
 
-import java.util.concurrent.CompletableFuture;
-
 import com.a2a.commandcenter.IA2aOrchestrator.Ia2aUIDelegate;
-import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.a2a.commandcenter.model.ui.RightClickInstruction;
+import com.a2a.commandcenter.IUIActionDelegator;
 
 public class TestA2aUIDelegate implements Ia2aUIDelegate {
 
@@ -14,10 +11,9 @@ public class TestA2aUIDelegate implements Ia2aUIDelegate {
     }
 
     @Override
-    public CompletableFuture<ActionResult> processRightClick(RightClickInstruction rightClickInstruction) {
-        return CompletableFuture.supplyAsync(() -> {
-            return new ActionResult();
-        });
+    public IUIActionDelegator getUIActionDelegator() {
+        // TODO Auto-generated method stub
+        return new TestA2aUIActionDelegator();
     }
 
 }

@@ -13,7 +13,7 @@ import com.a2a.commandcenter.model.data.PollerConfig;
 import com.a2a.commandcenter.model.data.ServerInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.a2a.commandcenter.model.ui.RightClickInstruction;
+import com.a2a.commandcenter.model.ui.ClickInstruction;
 import com.commandcenter.ICommandCenterDelegates;
 import com.commandcenter.ICommandCenterModel;
 import com.commandcenter.IWorkflowOrchestrator;
@@ -37,7 +37,8 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates,
     public interface Ia2aUIDelegate extends IUIDelegate {
         void createLayout();
 
-        ActionResult processRightClick(RightClickInstruction rightClickInstruction);
+        public IUIActionDelegator getUIActionDelegator();
+
     }
 
     public interface Ia2aDataDelegate extends IDataDelegate {
