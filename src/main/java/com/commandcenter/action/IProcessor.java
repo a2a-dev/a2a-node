@@ -1,11 +1,29 @@
 package com.commandcenter.action;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.commandcenter.ICommandCenterDelegates;
 import com.commandcenter.ICommandCenterModel;
 
 public interface IProcessor<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O> {
 
     public O process(I input);
+
+    public default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType) {
+        return go(actionType, null);
+    }
+
+    public default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType, W with) {
+        return CompletableFuture.supplyAsync(() -> goSync(actionType, with));
+    }
+
+    public default <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> actionType) {
+        return goSync(actionType, null);
+    }
+
+    public default <P extends IProcessor<D, M, W, R>, W, R> R goSync(Class<P> actionType, W with) {
+        return getHandler(actionType).process(with);
+    }
 
     public default D getDelegates() {
         if (getModel() != null) {

@@ -1,0 +1,23 @@
+package com.a2a.commandcenter.model.data;
+
+import com.a2a.commandcenter.A2aCommandCenterModel;
+import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.model.data.UIInstruction.ActionParameter;
+import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
+import com.commandcenter.action.IProcessor.Processor;
+
+public class DoubleClickHandler
+        extends Processor<IA2aCCDelegates, A2aCommandCenterModel, ActionParameter, ActionResult> {
+
+    public DoubleClickHandler(A2aCommandCenterModel model) {
+        super(model);
+
+    }
+
+    @Override
+    public ActionResult process(ActionParameter input) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'process'");
+    }
+
+}

@@ -25,10 +25,10 @@ public interface IAction {
 
     public static interface IUIDesignAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
             extends IProcessor<D, M, I, O> {
-        public static abstract class UIDesignDelegate<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
+        public static abstract class UIDesignAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
                 extends Processor<D, M, I, O> implements IUIDesignAction<D, M, I, O> {
 
-            public UIDesignDelegate(M model) {
+            public UIDesignAction(M model) {
                 super(model);
             }
 
@@ -51,10 +51,10 @@ public interface IAction {
     public static interface IDataAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
             extends IProcessor<D, M, I, O> {
 
-        public static abstract class DataDelegate<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
+        public static abstract class DataAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
                 extends Processor<D, M, I, O> implements IDataAction<D, M, I, O> {
 
-            public DataDelegate(M model) {
+            public DataAction(M model) {
                 super(model);
             }
 
