@@ -19,6 +19,11 @@ public interface ICommandCenter<D extends ICommandCenterDelegates, M extends ICo
 
         public CommandCenter(M model) {
             super(model);
+
+        }
+
+        @Override
+        public void register() {
             getProcessors().stream().filter(c -> isNotLazy(c)).forEach(p -> getHandler(p));
         }
 

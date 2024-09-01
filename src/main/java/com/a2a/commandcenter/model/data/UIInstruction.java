@@ -48,6 +48,7 @@ public class UIInstruction {
     public class A2aUIAction {
         public A2aActionType actionType;
         public ActionParameter actionParameter;
+        public String name;
 
     }
 
@@ -73,7 +74,7 @@ public class UIInstruction {
         public int height;
     }
 
-    public class ActionResult {
+    public static class ActionResult {
         public boolean success;
         public long sequence;
         public String message;
@@ -106,5 +107,4 @@ public class UIInstruction {
             this.handlerType = handlerType;
         }
     }
-
 }

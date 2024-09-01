@@ -19,15 +19,12 @@ public class EventPoller extends DataAction<IA2aCCDelegates, A2aCommandCenterMod
 
     @Override
     public Void process(Void input) {
-
         PollerConfig pollerConfig = new PollerConfig();
         getDelegates().getDataDelegate().registerPollerFunction(pollerFunction, pollerConfig);
-
         return null;
     }
 
     public Consumer<UIInstruction> pollerFunction = (input) -> {
         go(InstructionProcessor.class, input);
-
     };
 }

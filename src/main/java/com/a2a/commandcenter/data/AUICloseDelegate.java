@@ -6,10 +6,10 @@ import com.a2a.commandcenter.model.data.NodeEnd;
 import com.a2a.commandcenter.model.data.ServerEnd;
 import com.commandcenter.action.IAction.IDataAction.DataAction;
 
-public abstract class AUICloseDelegate
-        extends DataAction<IA2aCCDelegates, A2aCommandCenterModel, NodeEnd, ServerEnd> {
-
+public abstract class AUICloseDelegate extends DataAction<IA2aCCDelegates, A2aCommandCenterModel, NodeEnd, ServerEnd> {
+    
     public AUICloseDelegate(A2aCommandCenterModel model) {
         super(model);
     }
+    
 }

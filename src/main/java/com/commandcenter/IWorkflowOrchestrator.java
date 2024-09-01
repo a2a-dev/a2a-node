@@ -23,11 +23,12 @@ public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M exte
             extends CommandCenter<D, M, ICommandCenterAction<D, M, ?>, Void>
             implements IWorkflowOrchestrator<D, M> {
         private final D delegates;
-        private Map<Class<? extends IProcessor<D, M, ?, ?>>, Object> register = new HashMap<>();
+        private Map<Class<? extends IProcessor<D, M, ?, ?>>, Object> register;
 
         public WorkflowOrchestrator(M model, D delegates) {
             super(model);
             this.delegates = delegates;
+
         }
 
         @Override
@@ -39,16 +40,24 @@ public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M exte
         public <P extends IProcessor<D, M, ?, ?>> P getHandler(
                 Class<P> clazz) {
             try {
-                if (register.containsKey(clazz)) {
+                if (getRegister().containsKey(clazz)) {
                     return (P) register.get(clazz);
                 }
                 P newInstance = clazz.getConstructor(getModel().getClass()).newInstance(getModel());
                 newInstance.setParent(this);
+                newInstance.register();
                 register.put(clazz, newInstance);
                 return newInstance;
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        }
+
+        public Map<Class<? extends IProcessor<D, M, ?, ?>>, Object> getRegister() {
+            if (register == null) {
+                register = new HashMap<>();
+            }
+            return register;
         }
 
         protected abstract Collection<Class<? extends ICommandCenterAction<D, M, ?>>> getCommandCenters();

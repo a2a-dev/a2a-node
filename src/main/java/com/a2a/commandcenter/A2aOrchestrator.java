@@ -12,7 +12,7 @@ public final class A2aOrchestrator extends WorkflowOrchestrator<IA2aCCDelegates,
 
     private static A2aOrchestrator INSTANCE = null;
 
-    static A2aOrchestrator getInstance(IA2aCCDelegates delegates) {
+    public static A2aOrchestrator getInstance(IA2aCCDelegates delegates) {
         if (INSTANCE == null) {
             INSTANCE = new A2aOrchestrator(delegates);
         }
@@ -25,10 +25,11 @@ public final class A2aOrchestrator extends WorkflowOrchestrator<IA2aCCDelegates,
 
     @Override
     public void handle() {
-        go(A2aDataCommandCenter.class).thenAccept(data -> {
-            go(A2aUiDesignCommandCenter.class);
+        goSync(A2aDataCommandCenter.class);
+        // thenAccept(data -> {
+        goSync(A2aUiDesignCommandCenter.class);
 
-        });
+        // });
 
     }
 

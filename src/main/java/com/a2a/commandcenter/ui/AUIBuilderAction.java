@@ -14,6 +14,7 @@ public class AUIBuilderAction extends UIDesignAction<IA2aCCDelegates, A2aCommand
 
     @Override
     public void handle() {
+        System.out.println("AUIBuilderAction.handle()");
         getDelegates().getUIDelegate().createLayout();
     }
 

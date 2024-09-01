@@ -18,6 +18,7 @@ public class A2aUiDesignCommandCenter
 
     @Override
     public void consume(Void input) {
+        System.out.println("A2aUiDesignCommandCenter.consume()");
         go(AUIBuilderAction.class);
     }
 

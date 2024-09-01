@@ -8,13 +8,11 @@ import javafx.application.Application;
  * Hello world!
  *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
 
-        A2aOrchestrator orchestrator = new A2aOrchestrator(new A2aCommandCenterModel(), new IA2aCCDelegates());
+        A2aOrchestrator orchestrator = A2aOrchestrator.getInstance(new A2aCCDelegates());
 
-       Application.launch(NodeUIRunner.class, args);
+        Application.launch(NodeUIRunner.class, args);
     }
 }
