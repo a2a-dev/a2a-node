@@ -11,7 +11,7 @@ import javafx.application.Application;
 public class App {
     public static void main(String[] args) {
 
-        A2aOrchestrator orchestrator = A2aOrchestrator.getInstance(new A2aCCDelegates());
+        A2aOrchestrator orchestrator = A2aOrchestrator.getInstance(new A2aCCDelegateImplementer());
 
         Application.launch(NodeUIRunner.class, args);
     }

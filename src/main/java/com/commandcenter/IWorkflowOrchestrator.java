@@ -12,15 +12,7 @@ import com.commandcenter.action.IProcessor.IHandler;
 
 public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
         extends ICommandCenter<D, M, ICommandCenterAction<D, M, ?>, Void>, IHandler<D, M> {
-
-    public static interface IUIDelegate {
-
-    }
-
-    public static interface IDataDelegate {
-
-    }
-
+ 
     public abstract static class WorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
             extends CommandCenter<D, M, ICommandCenterAction<D, M, ?>, Void>
             implements IWorkflowOrchestrator<D, M> {

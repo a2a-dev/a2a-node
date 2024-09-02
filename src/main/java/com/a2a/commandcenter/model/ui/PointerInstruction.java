@@ -8,6 +8,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClickInstruction extends ActionParameter {
+public class PointerInstruction extends ActionParameter {
     Point point;
 }

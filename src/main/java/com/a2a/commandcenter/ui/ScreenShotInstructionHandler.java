@@ -11,13 +11,12 @@ public class ScreenShotInstructionHandler
 
     public ScreenShotInstructionHandler(A2aCommandCenterModel model) {
         super(model);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public ActionResult process(ActionParameter input) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'process'");
+       
+        return getDelegates().getUIActionDelegator().doScreenShot(input);
     }
 
 }

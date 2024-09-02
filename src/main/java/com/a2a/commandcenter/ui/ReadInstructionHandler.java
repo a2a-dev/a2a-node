@@ -16,8 +16,7 @@ public class ReadInstructionHandler
 
     @Override
     public ActionResult process(ActionParameter input) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'process'");
+        return getDelegates().getUIActionDelegator().doRead(input);
     }
 
 }

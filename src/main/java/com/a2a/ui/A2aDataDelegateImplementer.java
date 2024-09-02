@@ -8,7 +8,7 @@ import com.a2a.commandcenter.model.data.PollerConfig;
 import com.a2a.commandcenter.model.data.ServerInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
 
-public class A2aDataDelegate implements Ia2aDataDelegate {
+public class A2aDataDelegateImplementer implements Ia2aDataDelegate {
 
     @Override
     public ServerInit registerNode(NodeInit input) {

@@ -12,8 +12,6 @@ import com.a2a.commandcenter.model.data.NodeInit;
 import com.a2a.commandcenter.model.data.PollerConfig;
 import com.a2a.commandcenter.model.data.ServerInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
-import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.a2a.commandcenter.model.ui.ClickInstruction;
 import com.commandcenter.ICommandCenterDelegates;
 import com.commandcenter.ICommandCenterModel;
 import com.commandcenter.IWorkflowOrchestrator;
@@ -29,19 +27,21 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates,
     }
 
     public static interface IA2aCCDelegates extends ICommandCenterDelegates {
-        Ia2aUIDelegate getUIDelegate();
 
-        Ia2aDataDelegate getDataDelegate();
-    }
+        public Ia2aUIDelegate getUIDelegate();
 
-    public interface Ia2aUIDelegate extends IUIDelegate {
-        void createLayout();
+        public Ia2aDataDelegate getDataDelegate();
 
         public IUIActionDelegator getUIActionDelegator();
 
     }
 
-    public interface Ia2aDataDelegate extends IDataDelegate {
+    public interface Ia2aUIDelegate {
+        void createLayout();
+
+    }
+
+    public interface Ia2aDataDelegate {
 
         ServerInit registerNode(NodeInit input);
 
