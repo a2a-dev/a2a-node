@@ -16,7 +16,7 @@ public class ActionResultHandler
 
     @Override
     public Rectangle process(ActionResult input) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'process'");
     }
 

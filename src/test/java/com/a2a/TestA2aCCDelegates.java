@@ -9,7 +9,7 @@ public class TestA2aCCDelegates implements IA2aCCDelegates {
 
     @Override
     public Ia2aUIDelegate getUIDelegate() {
-        // TODO Auto-generated method stub
+
         return new TestA2aUIDelegate();
     }
 
@@ -20,7 +20,7 @@ public class TestA2aCCDelegates implements IA2aCCDelegates {
 
     @Override
     public IUIActionDelegator getUIActionDelegator() {
-       return new TestA2aUIActionDelegator();
+        return new TestA2aUIActionDelegator();
     }
 
 }

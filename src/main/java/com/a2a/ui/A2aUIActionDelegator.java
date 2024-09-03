@@ -21,37 +21,37 @@ public class A2aUIActionDelegator implements IUIActionDelegator {
 
     @Override
     public ActionResult doMouseMove(PointerInstruction clickInstruction) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'doMouseMove'");
     }
 
     @Override
     public ActionResult doLeftClick(PointerInstruction clickInstruction) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'doLeftClick'");
     }
 
     @Override
     public ActionResult doKeyIn(ActionParameter input) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'doKeyIn'");
     }
 
     @Override
     public ActionResult doDnD(ActionParameter input) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'doDnD'");
     }
 
     @Override
     public ActionResult doRead(ActionParameter input) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'doRead'");
     }
 
     @Override
     public ActionResult doScreenShot(ActionParameter input) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'doScreenShot'");
     }
 

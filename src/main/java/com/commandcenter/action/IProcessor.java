@@ -25,7 +25,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
         return supplyAsync;
     }
 
-    default Collection<CompletableFuture<?>> getThreads(){
+    default Collection<CompletableFuture<?>> getThreads() {
         if (getParent() != null) {
             return getParent().getThreads();
         } else {
@@ -88,7 +88,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
 
         @Override
         public void setParent(IProcessor<D, M, ?, ?> parent) {
-            // TODO Auto-generated method stub
+
             IProcessor.super.setParent(parent);
             this.parent = parent;
         }
