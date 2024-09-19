@@ -8,10 +8,20 @@ import com.a2a.commandcenter.data.DoubleClickInstructionHandler;
 import com.a2a.commandcenter.data.KeyInInstructionHandler;
 import com.a2a.commandcenter.data.LeftClickInstructionHandler;
 import com.a2a.commandcenter.data.MoveInstructionHandler;
-import com.a2a.commandcenter.data.ParallelFlowHandler;
+import com.a2a.commandcenter.data.QueueFlowHandler;
+import com.a2a.commandcenter.data.ReadInstructionHandler;
 import com.a2a.commandcenter.data.RightClickInstructionHandler;
 import com.a2a.commandcenter.data.WaitInstructionHandler;
 import com.a2a.commandcenter.ui.ScreenShotInstructionHandler;
+import com.a2a.commandcenter.ui.instruction.flow.AddFlowHandler;
+import com.a2a.commandcenter.ui.instruction.flow.FlowHandler;
+import com.a2a.commandcenter.ui.instruction.flow.NestedFlowHandler;
+import com.a2a.commandcenter.ui.instruction.flow.ParallelFlowHandler;
+import com.a2a.commandcenter.ui.instruction.flow.PauseFlowHandler;
+import com.a2a.commandcenter.ui.instruction.flow.RestartFlowHandler;
+import com.a2a.commandcenter.ui.instruction.flow.SkipFlowHandler;
+import com.a2a.commandcenter.ui.instruction.flow.StartFlowHandler;
+import com.a2a.commandcenter.ui.instruction.flow.StopFlowHandler;
 import com.commandcenter.action.IProcessor;
 
 import lombok.Getter;
@@ -21,58 +31,69 @@ import lombok.Setter;
 @Setter
 public class UIInstruction {
 
-    private A2aControl action;
+    private A2aControlType action;
     public String flowName;
-    private A2aActionBlock[] blocks;
+    private A2aControlBlock[] controlBlocks;
+    private A2aActionBlock[] actionBlocks;
+    private String lastModified;
+    private boolean record;
+    private String scope;
+    private String parentFlowName;
 
-    public enum A2aControl {
+    public enum A2aControlType {
         START(StartFlowHandler.class),
+        ADD(AddFlowHandler.class),
+        NESTED(NestedFlowHandler.class),
         STOP(StopFlowHandler.class),
         QUEUE(QueueFlowHandler.class),
+        SKIP(SkipFlowHandler.class),
         PARALLEL(ParallelFlowHandler.class),
         PAUSE(PauseFlowHandler.class),
         CONTINUE(ContinueFlowHandler.class),
         RESTART(RestartFlowHandler.class);
 
-        private Class<? extends IProcessor<IA2aCCDelegates, A2aCommandCenterModel, A2aActionBlock[], ActionResult>> handlerType;
+        private Class<? extends FlowHandler> handlerType;
 
-        public Class<? extends IProcessor<IA2aCCDelegates, A2aCommandCenterModel, A2aActionBlock[], ActionResult>> getHandlerType() {
+        public Class<? extends FlowHandler> getHandlerType() {
             return handlerType;
         }
 
-        A2aControl(
-                Class<? extends IProcessor<IA2aCCDelegates, A2aCommandCenterModel, A2aActionBlock[], ActionResult>> handlerType) {
+        A2aControlType(
+                Class<? extends FlowHandler> handlerType) {
             this.handlerType = handlerType;
         }
     }
 
     @Getter
     @Setter
-    public static class A2aActionBlock {
-        public A2aControlAction controlAction;
+    public static class A2aControlBlock {
         public String expression;
-        public A2aUIAction action[];
-
-    }
-
-    public class A2aControlAction {
+        public String trueActionBlock;
+        public String falseActionBlock;
+        public String scope;
 
     }
 
     @Getter
     @Setter
-    public class A2aUIAction {
+    public class A2aActionBlock {
+        public A2aUIAction[] actions;
+        public String name;
+    }
+
+    @Getter
+    @Setter
+    public static class A2aUIAction {
         public A2aUIActionType actionType;
         public ActionParameter actionParameter;
         public String name;
-        A2aActionBlock flow;
+        public String scopeContributor;
 
     }
 
     @Getter
     @Setter
     public static class ActionParameter {
-        // This field is not part of the
         public transient boolean record;
         public Rectangle location;
         public String value;

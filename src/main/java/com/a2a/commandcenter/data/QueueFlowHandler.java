@@ -5,11 +5,10 @@ import com.a2a.commandcenter.model.data.UIInstruction.A2aControlBlock;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
 import com.a2a.commandcenter.ui.instruction.flow.FlowHandler;
 
-public class ContinueFlowHandler extends FlowHandler {
+public class QueueFlowHandler extends FlowHandler {
 
-    public ContinueFlowHandler(A2aCommandCenterModel model) {
+    public QueueFlowHandler(A2aCommandCenterModel model) {
         super(model);
-
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.commandcenter.action.IProcessor.IHandler;
 
 public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
         extends ICommandCenter<D, M, ICommandCenterAction<D, M, ?>, Void>, IHandler<D, M> {
- 
+
     public abstract static class WorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
             extends CommandCenter<D, M, ICommandCenterAction<D, M, ?>, Void>
             implements IWorkflowOrchestrator<D, M> {
@@ -23,7 +23,6 @@ public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M exte
         public WorkflowOrchestrator(M model, D delegates) {
             super(model);
             this.delegates = delegates;
-
         }
 
         @Override
@@ -71,6 +70,5 @@ public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M exte
         public Collection<Class<? extends ICommandCenterAction<D, M, ?>>> getProcessors() {
             return getCommandCenters();
         }
-
     }
 }

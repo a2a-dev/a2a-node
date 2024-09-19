@@ -18,9 +18,7 @@ public interface IAction {
             public UIAction(M model) {
                 super(model);
             }
-
         }
-
     }
 
     public static interface IUIDesignAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
@@ -31,9 +29,7 @@ public interface IAction {
             public UIDesignAction(M model) {
                 super(model);
             }
-
         }
-
     }
 
     public static interface ICommandCenterAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
@@ -44,7 +40,6 @@ public interface IAction {
             public CommandCenterAction(M model) {
                 super(model);
             }
-
         }
     }
 
@@ -53,12 +48,9 @@ public interface IAction {
 
         public static abstract class DataAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
                 extends AProcessor<D, M, I, O> implements IDataAction<D, M, I, O> {
-
             public DataAction(M model) {
                 super(model);
             }
-
         }
-
     }
 }

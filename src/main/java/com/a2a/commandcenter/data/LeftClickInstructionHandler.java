@@ -12,7 +12,6 @@ public class LeftClickInstructionHandler
 
     public LeftClickInstructionHandler(A2aCommandCenterModel model) {
         super(model);
-
     }
 
     @Override

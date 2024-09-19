@@ -1,12 +1,11 @@
-package com.a2a.commandcenter.model.data;
+package com.a2a.commandcenter.ui.instruction.flow;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
-import com.a2a.commandcenter.model.data.UIInstruction.A2aActionBlock;
+import com.a2a.commandcenter.model.data.UIInstruction.A2aControlBlock;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
-import com.a2a.commandcenter.ui.A2aAProcessor;
 
 public class PauseFlowHandler
-        extends A2aAProcessor<A2aActionBlock[], ActionResult> {
+        extends FlowHandler {
 
     public PauseFlowHandler(A2aCommandCenterModel model) {
         super(model);
@@ -14,7 +13,7 @@ public class PauseFlowHandler
     }
 
     @Override
-    public ActionResult process(A2aActionBlock[] input) {
+    public ActionResult process(A2aControlBlock[] input) {
 
         throw new UnsupportedOperationException("Unimplemented method 'process'");
     }

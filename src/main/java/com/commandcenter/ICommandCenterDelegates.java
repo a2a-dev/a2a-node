@@ -1,5 +1,7 @@
 package com.commandcenter;
 
-public interface ICommandCenterDelegates  {
- 
+public interface ICommandCenterDelegates {
+
+    
+
 }

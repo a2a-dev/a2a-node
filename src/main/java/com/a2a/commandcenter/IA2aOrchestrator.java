@@ -8,9 +8,8 @@ package com.a2a.commandcenter;
 import java.util.function.Consumer;
 
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
-import com.a2a.commandcenter.model.data.NodeInit;
 import com.a2a.commandcenter.model.data.PollerConfig;
-import com.a2a.commandcenter.model.data.ServerInit;
+import com.a2a.commandcenter.model.data.Session.SessionInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
 import com.commandcenter.ICommandCenterDelegates;
 import com.commandcenter.ICommandCenterModel;
@@ -43,7 +42,7 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates,
 
     public interface Ia2aDataDelegate {
 
-        ServerInit registerNode(NodeInit input);
+        SessionInit registerNode(SessionInit input);
 
         void registerPollerFunction(Consumer<UIInstruction> pollerFunction, PollerConfig pollerConfig);
 

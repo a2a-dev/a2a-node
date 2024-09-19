@@ -1,4 +1,4 @@
-package com.a2a.commandcenter.model.data;
+package com.a2a.commandcenter.data;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionParameter;
@@ -10,7 +10,7 @@ public class ReadInstructionHandler
 
     public ReadInstructionHandler(A2aCommandCenterModel model) {
         super(model);
-        // TODO Auto-generated constructor stub
+     
     }
 
     @Override
