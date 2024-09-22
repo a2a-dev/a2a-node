@@ -43,4 +43,11 @@ public class Session {
 
     }
 
+    @Getter
+    @Setter
+    public static class SessionInfo {
+        String sessionToken;
+        String nodeName;
+    }
+
 }

@@ -5,14 +5,19 @@
 
 package com.a2a.commandcenter;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
-import com.a2a.commandcenter.model.data.PollerConfig;
+import com.a2a.commandcenter.model.data.Session.SessionInfo;
 import com.a2a.commandcenter.model.data.Session.SessionInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
-import com.commandcenter.ICommandCenterDelegates;
-import com.commandcenter.ICommandCenterModel;
+import com.commandcenter.IModel;
+import com.commandcenter.IDelegates;
 import com.commandcenter.IWorkflowOrchestrator;
 
 /**
@@ -22,10 +27,10 @@ import com.commandcenter.IWorkflowOrchestrator;
 
 public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates, A2aCommandCenterModel> {
 
-    public static interface IA2aCommandCenterModel extends ICommandCenterModel<IA2aCCDelegates> {
+    public static interface IA2aCommandCenterModel extends IModel<IA2aCCDelegates> {
     }
 
-    public static interface IA2aCCDelegates extends ICommandCenterDelegates {
+    public static interface IA2aCCDelegates extends IDelegates {
 
         public Ia2aUIDelegate getUIDelegate();
 
@@ -42,9 +47,29 @@ public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates,
 
     public interface Ia2aDataDelegate {
 
-        SessionInit registerNode(SessionInit input);
+        SessionInfo registerPollerFunction(Consumer<UIInstruction> pollerFunction, SessionInit sessionInit);
 
-        void registerPollerFunction(Consumer<UIInstruction> pollerFunction, PollerConfig pollerConfig);
+        Boolean closeSession(SessionInit input);
 
+    }
+
+    public static abstract class A2aCCDelegates implements IA2aCCDelegates {
+
+        @Override
+        public Executor getExecutor() {
+            return new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, new SynchronousQueue<>(),
+                    (runnable) -> new Thread(runnable, "A2aCCDelegates"));
+        }
+
+        @Override
+        public Executor getExpediteExecutor() {
+            return new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS, new SynchronousQueue<>(),
+                    (runnable) -> new Thread(runnable, "A2aCCDelegates:Expedite"));
+        }
+
+        @Override
+        public Logger getLogger() {
+            return Logger.getLogger("A2aCCDelegates");
+        }
     }
 }

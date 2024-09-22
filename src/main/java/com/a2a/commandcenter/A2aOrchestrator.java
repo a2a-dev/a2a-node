@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
 import com.commandcenter.IWorkflowOrchestrator.WorkflowOrchestrator;
+import com.commandcenter.action.IProcessor;
 import com.commandcenter.action.IAction.ICommandCenterAction;
 
 public final class A2aOrchestrator extends WorkflowOrchestrator<IA2aCCDelegates, A2aCommandCenterModel>

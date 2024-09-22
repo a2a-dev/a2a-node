@@ -15,6 +15,7 @@ public class InstructionProcessor extends DataAction<IA2aCCDelegates, A2aCommand
 
     @Override
     public void consume(UIInstruction input) {
-        go(input.getAction().getHandlerType(), input.getControlBlocks());
+        go(input.getAction().getHandlerType(), input);
     }
+
 }

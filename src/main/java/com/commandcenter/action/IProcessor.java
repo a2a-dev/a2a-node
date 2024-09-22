@@ -2,22 +2,34 @@ package com.commandcenter.action;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.logging.Level;
 
-import com.commandcenter.ICommandCenterDelegates;
-import com.commandcenter.ICommandCenterModel;
+import com.commandcenter.IDelegates;
+import com.commandcenter.IModel;
 
-public interface IProcessor<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O> {
+public interface IProcessor<D extends IDelegates, M extends IModel<D>, I, O> {
 
     O process(I input);
+
+    Collection<Class<? extends IProcessor<D, M, ?, ?>>> getProcessors();
 
     default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType) {
         return go(actionType, null);
     }
 
     default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType, W with) {
-        CompletableFuture<R> supplyAsync = CompletableFuture.supplyAsync(() -> goSync(actionType, with));
-        CompletableFuture<R> exceptionally = supplyAsync.exceptionally(
+        return go(actionType, with, false);
+    }
+
+    default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType, W with,
+            boolean expedite) {
+        Executor executor = expedite ? getDelegates().getExpediteExecutor() : getDelegates().getExecutor();
+        CompletableFuture<R> supplyAsync = CompletableFuture.supplyAsync(() -> goSync(actionType, with), executor);
+        supplyAsync.exceptionally(
                 (e) -> {
+                    getDelegates().getLogger().log(Level.FINE,
+                            "Exception in " + actionType.getName() + " " + e.getMessage());
                     e.printStackTrace();
                     return null;
                 });
@@ -43,7 +55,8 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
 
     default D getDelegates() {
         if (getModel() != null) {
-            CCLogUtil.verbose("getDelegates() method is expected to be overridden in the root ");
+            getDelegates().getLogger().log(Level.FINE,
+                    "getDelegates() method is expected to be overridden in the root ");
             return getParent().getDelegates();
         } else {
             throw new IllegalStateException("getDelegates() method is expected to be overridden in the root ");
@@ -53,7 +66,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
     default <H extends IProcessor<D, M, ?, ?>> H getHandler(
             Class<H> clazz) {
         if (getParent() != null) {
-            CCLogUtil.verbose("get Handler for " + clazz.getName());
+            getDelegates().getLogger().log(Level.FINE, "get Handler for " + clazz.getName());
             return getParent().getHandler(clazz);
         } else {
             throw new IllegalStateException("getHandler() method is expected to be overridden in the root ");
@@ -80,7 +93,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
         }
     }
 
-    public abstract static class AProcessor<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
+    public abstract static class AProcessor<D extends IDelegates, M extends IModel<D>, I, O>
             implements IProcessor<D, M, I, O> {
 
         private final M model;
@@ -108,7 +121,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
         }
     }
 
-    public static interface IHandler<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
+    public static interface IHandler<D extends IDelegates, M extends IModel<D>>
             extends IConsumer<D, M, Void> {
         public void handle();
 
@@ -117,7 +130,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
             handle();
         }
 
-        public abstract static class AHandler<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
+        public abstract static class AHandler<D extends IDelegates, M extends IModel<D>>
                 extends AProcessor<D, M, Void, Void>
                 implements IHandler<D, M> {
             public AHandler(M model) {
@@ -126,7 +139,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
         }
     }
 
-    public static interface IProducer<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, O>
+    public static interface IProducer<D extends IDelegates, M extends IModel<D>, O>
             extends IProcessor<D, M, Void, O> {
         public O produce();
 
@@ -135,7 +148,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
             return produce();
         }
 
-        public abstract static class AProducer<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, O>
+        public abstract static class AProducer<D extends IDelegates, M extends IModel<D>, O>
                 extends AProcessor<D, M, Void, O>
                 implements IProducer<D, M, O> {
             public AProducer(M model) {
@@ -144,7 +157,7 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
         }
     }
 
-    public static abstract interface IConsumer<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
+    public static abstract interface IConsumer<D extends IDelegates, M extends IModel<D>, I>
             extends IProcessor<D, M, I, Void> {
         public void consume(I input);
 
@@ -154,11 +167,12 @@ public interface IProcessor<D extends ICommandCenterDelegates, M extends IComman
             return null;
         }
 
-        public abstract static class AConsumer<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
+        public abstract static class AConsumer<D extends IDelegates, M extends IModel<D>, I>
                 extends AProcessor<D, M, I, Void>
                 implements IConsumer<D, M, I> {
             public AConsumer(M model) {
                 super(model);
+                getProcessors().stream().forEach(p -> getHandler(p));
             }
         }
     }

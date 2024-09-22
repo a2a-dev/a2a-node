@@ -1,8 +1,9 @@
 package com.a2a.commandcenter.ui;
 
+import java.util.logging.Level;
+
 import com.a2a.commandcenter.A2aCommandCenterModel;
 import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
-import com.commandcenter.action.CCLogUtil;
 import com.commandcenter.action.IAction.IUIDesignAction.UIDesignAction;
 import com.commandcenter.action.IProcessor.IHandler;
 
@@ -15,7 +16,7 @@ public class AUIBuilderAction extends UIDesignAction<IA2aCCDelegates, A2aCommand
 
     @Override
     public void handle() {
-        CCLogUtil.verbose("AUIBuilderAction.handle()");
+        getDelegates().getLogger().log(Level.FINE, "AUIBuilderAction.handle()");
         getDelegates().getUIDelegate().createLayout();
     }
 

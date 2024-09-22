@@ -1,8 +1,9 @@
 package com.a2a.commandcenter.ui.instruction.flow;
 
-import java.util.Arrays;
+import java.util.List;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
+import com.a2a.commandcenter.model.data.UIInstruction;
 import com.a2a.commandcenter.model.data.UIInstruction.A2aControlBlock;
 import com.a2a.commandcenter.model.data.UIInstruction.ActionResult;
 import com.a2a.commandcenter.ui.instruction.action.ActionBlockHandler;
@@ -14,12 +15,24 @@ public class StartFlowHandler extends FlowHandler {
     }
 
     @Override
-    public ActionResult process(A2aControlBlock[] input) {
+    public ActionResult process(UIInstruction input) {
 
-        Arrays.stream(input).forEach(actionBlock -> {
+        if (input.getControlBlocks() != null) {
+            getModel().getControlBlocksByName().put(input.flowName, input.getControlBlocks());
+        }
+
+        List<A2aControlBlock> blocks = getModel().getControlBlocksByName().get(input.flowName);
+        getModel().getActionBlocksByName().putAll(input.getActionBlocks());
+
+        blocks.forEach(actionBlock -> {
             goSync(ActionBlockHandler.class, actionBlock);
         });
-        return null;
+
+        ActionResult actionResult = new ActionResult();
+        actionResult.setActionName(input.flowName);
+        actionResult.success = true;
+        actionResult.session = getModel().getSessionId();
+        return actionResult;
 
     }
 

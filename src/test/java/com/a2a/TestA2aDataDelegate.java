@@ -3,17 +3,16 @@ package com.a2a;
 import java.util.function.Consumer;
 
 import com.a2a.commandcenter.IA2aOrchestrator.Ia2aDataDelegate;
-import com.a2a.commandcenter.model.data.NodeInit;
 import com.a2a.commandcenter.model.data.PollerConfig;
-import com.a2a.commandcenter.model.data.ServerInit;
+import com.a2a.commandcenter.model.data.Session.SessionInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
 
 public class TestA2aDataDelegate implements Ia2aDataDelegate {
 
     @Override
-    public ServerInit registerNode(NodeInit input) {
+    public SessionInit registerNode(SessionInit input) {
         System.out.println("Registering node--------------");
-        return new ServerInit();
+        return new SessionInit();
     }
 
     @Override

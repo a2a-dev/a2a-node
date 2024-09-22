@@ -1,29 +1,31 @@
 package com.commandcenter.action;
 
-import com.commandcenter.ICommandCenterDelegates;
-import com.commandcenter.ICommandCenterModel;
-import com.commandcenter.action.IProcessor.IConsumer;
+import java.util.Collection;
+import java.util.Collections;
 
-public interface IAction {
+import com.commandcenter.IModel;
+import com.commandcenter.IDelegates;
 
-    public static interface Lazy {
+public interface IAction<D extends IDelegates, M extends IModel<D>, I, O>
+        extends IProcessor<D, M, I, O> {
+
+    @Override
+    default public Collection<Class<? extends IProcessor<D, M, ?, ?>>> getProcessors() {
+        return Collections.emptyList();
     }
 
-    public static interface IUIAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
-            extends IProcessor<D, M, I, O> {
+    public static abstract class UIAction<D extends IDelegates, M extends IModel<D>, I, O>
+            extends AProcessor<D, M, I, O> implements IAction<D, M, I, O> {
 
-        public static abstract class UIAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
-                extends AProcessor<D, M, I, O> implements IUIAction<D, M, I, O> {
-
-            public UIAction(M model) {
-                super(model);
-            }
+        public UIAction(M model) {
+            super(model);
         }
+
     }
 
-    public static interface IUIDesignAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
-            extends IProcessor<D, M, I, O> {
-        public static abstract class UIDesignAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
+    public static interface IUIDesignAction<D extends IDelegates, M extends IModel<D>, I, O>
+            extends IAction<D, M, I, O> {
+        public static abstract class UIDesignAction<D extends IDelegates, M extends IModel<D>, I, O>
                 extends AProcessor<D, M, I, O> implements IUIDesignAction<D, M, I, O> {
 
             public UIDesignAction(M model) {
@@ -32,9 +34,9 @@ public interface IAction {
         }
     }
 
-    public static interface ICommandCenterAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
-            extends IConsumer<D, M, I> {
-        public static abstract class CommandCenterAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I>
+    public static interface ICommandCenterAction<D extends IDelegates, M extends IModel<D>, I>
+            extends IConsumer<D, M, I>, IAction<D, M, I, Void> {
+        public static abstract class CommandCenterAction<D extends IDelegates, M extends IModel<D>, I>
                 extends AConsumer<D, M, I> implements ICommandCenterAction<D, M, I> {
 
             public CommandCenterAction(M model) {
@@ -43,10 +45,10 @@ public interface IAction {
         }
     }
 
-    public static interface IDataAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
-            extends IProcessor<D, M, I, O> {
+    public static interface IDataAction<D extends IDelegates, M extends IModel<D>, I, O>
+            extends IAction<D, M, I, O> {
 
-        public static abstract class DataAction<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>, I, O>
+        public static abstract class DataAction<D extends IDelegates, M extends IModel<D>, I, O>
                 extends AProcessor<D, M, I, O> implements IDataAction<D, M, I, O> {
             public DataAction(M model) {
                 super(model);

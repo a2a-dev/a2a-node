@@ -10,12 +10,13 @@ import com.commandcenter.action.IAction.ICommandCenterAction;
 import com.commandcenter.action.IProcessor;
 import com.commandcenter.action.IProcessor.IHandler;
 
-public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
-        extends ICommandCenter<D, M, ICommandCenterAction<D, M, ?>, Void>, IHandler<D, M> {
+public interface IWorkflowOrchestrator<D extends IDelegates, M extends IModel<D>>
+        extends ICommandCenter<D, M, Void>, IHandler<D, M> {
 
-    public abstract static class WorkflowOrchestrator<D extends ICommandCenterDelegates, M extends ICommandCenterModel<D>>
-            extends CommandCenter<D, M, ICommandCenterAction<D, M, ?>, Void>
+    public abstract static class WorkflowOrchestrator<D extends IDelegates, M extends IModel<D>>
+            extends CommandCenter<D, M, Void>
             implements IWorkflowOrchestrator<D, M> {
+
         private final D delegates;
         private Map<Class<? extends IProcessor<D, M, ?, ?>>, Object> register;
         private final Collection<CompletableFuture<?>> threads = new LinkedList<>();
@@ -66,9 +67,10 @@ public interface IWorkflowOrchestrator<D extends ICommandCenterDelegates, M exte
             return null;
         }
 
-        @Override
-        public Collection<Class<? extends ICommandCenterAction<D, M, ?>>> getProcessors() {
-            return getCommandCenters();
-        }
+        // @Override
+        // public Collection<Class<? extends ICommandCenterAction<D, M, ?>>>
+        // getProcessors() {
+        // return getCommandCenters();
+        // }
     }
 }

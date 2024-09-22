@@ -1,11 +1,13 @@
 package com.a2a.ui;
 
-import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
-import com.a2a.commandcenter.IA2aOrchestrator.Ia2aUIDelegate;
-import com.a2a.commandcenter.delegate.A2aDataGCPImplementer;
-import com.a2a.commandcenter.IUIActionDelegator;
+import java.util.logging.Logger;
 
-public class A2aCCDelegateImplementer implements IA2aCCDelegates {
+import com.a2a.commandcenter.IA2aOrchestrator.A2aCCDelegates;
+import com.a2a.commandcenter.IA2aOrchestrator.Ia2aUIDelegate;
+import com.a2a.commandcenter.IUIActionDelegator;
+import com.a2a.commandcenter.delegate.A2aDataGCPImplementer;
+
+public class A2aCCDelegateImplementer extends A2aCCDelegates {
 
     private A2aDataGCPImplementer a2aDataGCPImplementer;
     private A2aUIActionDelegator a2aUIActionImplementer;
@@ -31,4 +33,7 @@ public class A2aCCDelegateImplementer implements IA2aCCDelegates {
     public Ia2aUIDelegate getUIDelegate() {
         return a2aUIImplementer;
     }
+
+
+
 }
