@@ -3,23 +3,23 @@ package com.a2a.commandcenter;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.IA2aWorkflow.IA2aCCDelegates;
 import com.commandcenter.IWorkflow.Workflow;
 import com.commandcenter.action.IProcessor;
 
-public final class A2aOrchestrator extends Workflow<IA2aCCDelegates, A2aCommandCenterModel>
-        implements IA2aOrchestrator {
+public final class A2aWorkflow extends Workflow<IA2aCCDelegates, A2aCommandCenterModel>
+        implements IA2aWorkflow {
 
-    private static A2aOrchestrator INSTANCE = null;
+    private static A2aWorkflow INSTANCE = null;
 
-    public static A2aOrchestrator getInstance(IA2aCCDelegates delegates) {
+    public static A2aWorkflow getInstance(IA2aCCDelegates delegates) {
         if (INSTANCE == null) {
-            INSTANCE = new A2aOrchestrator(delegates);
+            INSTANCE = new A2aWorkflow(delegates);
         }
         return INSTANCE;
     }
 
-    private A2aOrchestrator(IA2aCCDelegates delegates) {
+    private A2aWorkflow(IA2aCCDelegates delegates) {
         super(new A2aCommandCenterModel(), delegates);
     }
 

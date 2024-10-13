@@ -1,6 +1,6 @@
 package com.a2a.ui;
 
-import com.a2a.commandcenter.A2aOrchestrator;
+import com.a2a.commandcenter.A2aWorkflow;
 
 import javafx.application.Application;
 
@@ -11,7 +11,7 @@ import javafx.application.Application;
 public class App {
     public static void main(String[] args) {
 
-        A2aOrchestrator orchestrator = A2aOrchestrator.getInstance(new A2aCCDelegateImplementer());
+        A2aWorkflow orchestrator = A2aWorkflow.getInstance(new A2aCCDelegateImplementer());
 
         Application.launch(NodeUIRunner.class, args);
     }

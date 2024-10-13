@@ -3,8 +3,8 @@ package com.a2a;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import com.a2a.commandcenter.A2aOrchestrator;
-import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.A2aWorkflow;
+import com.a2a.commandcenter.IA2aWorkflow.IA2aCCDelegates;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -28,7 +28,7 @@ public class AppTest extends TestCase {
      * @return the suite of tests being tested
      */
     public static Test suite() {
-        return new TestSuite(A2aOrchestrator.class);
+        return new TestSuite(A2aWorkflow.class);
     }
 
     /**
@@ -37,12 +37,12 @@ public class AppTest extends TestCase {
 
     public void testApp() {
         IA2aCCDelegates delegates = new TestA2aCCDelegates();
-        A2aOrchestrator.getInstance(delegates).handle();
+        A2aWorkflow.getInstance(delegates).handle();
     }
 
     public static void main(String[] args) {
         IA2aCCDelegates delegates = new TestA2aCCDelegates();
-        A2aOrchestrator instance = A2aOrchestrator.getInstance(delegates);
+        A2aWorkflow instance = A2aWorkflow.getInstance(delegates);
         instance.handle();
         try {
             CompletableFuture.allOf(instance.getThreads().toArray(new CompletableFuture[instance.getThreads().size()]))

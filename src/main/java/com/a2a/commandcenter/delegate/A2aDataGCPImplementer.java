@@ -2,7 +2,7 @@ package com.a2a.commandcenter.delegate;
 
 import java.util.function.Consumer;
 
-import com.a2a.commandcenter.IA2aOrchestrator.Ia2aDataDelegate;
+import com.a2a.commandcenter.IA2aWorkflow.Ia2aDataDelegate;
 import com.a2a.commandcenter.model.data.Session.SessionInfo;
 import com.a2a.commandcenter.model.data.Session.SessionInit;
 import com.a2a.commandcenter.model.data.UIInstruction;

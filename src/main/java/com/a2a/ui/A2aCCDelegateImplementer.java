@@ -1,7 +1,7 @@
 package com.a2a.ui;
 
-import com.a2a.commandcenter.IA2aOrchestrator.A2aCCDelegates;
-import com.a2a.commandcenter.IA2aOrchestrator.Ia2aUIDelegate;
+import com.a2a.commandcenter.IA2aWorkflow.A2aCCDelegates;
+import com.a2a.commandcenter.IA2aWorkflow.Ia2aUIDelegate;
 import com.a2a.commandcenter.IUIActionDelegator;
 import com.a2a.commandcenter.delegate.A2aDataGCPImplementer;
 
@@ -31,7 +31,5 @@ public class A2aCCDelegateImplementer extends A2aCCDelegates {
     public Ia2aUIDelegate getUIDelegate() {
         return a2aUIImplementer;
     }
-
-
 
 }

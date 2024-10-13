@@ -3,9 +3,9 @@ package com.a2a;
 import java.util.concurrent.Executor;
 import java.util.logging.Logger;
 
-import com.a2a.commandcenter.IA2aOrchestrator.A2aCCDelegates;
-import com.a2a.commandcenter.IA2aOrchestrator.Ia2aDataDelegate;
-import com.a2a.commandcenter.IA2aOrchestrator.Ia2aUIDelegate;
+import com.a2a.commandcenter.IA2aWorkflow.A2aCCDelegates;
+import com.a2a.commandcenter.IA2aWorkflow.Ia2aDataDelegate;
+import com.a2a.commandcenter.IA2aWorkflow.Ia2aUIDelegate;
 import com.a2a.commandcenter.IUIActionDelegator;
 
 public class TestA2aCCDelegates extends A2aCCDelegates {

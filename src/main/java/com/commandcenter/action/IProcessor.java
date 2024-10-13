@@ -1,6 +1,7 @@
 package com.commandcenter.action;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.logging.Level;
@@ -22,8 +23,7 @@ public interface IProcessor<D extends IDelegates, M extends IModel<D>, I, O> {
         return go(actionType, with, false);
     }
 
-    default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType, W with,
-            boolean expedite) {
+    default <P extends IProcessor<D, M, W, R>, W, R> CompletableFuture<R> go(Class<P> actionType, W with, boolean expedite) {
         Executor executor = expedite ? getDelegates().getExpediteExecutor() : getDelegates().getExecutor();
         CompletableFuture<R> supplyAsync = CompletableFuture.supplyAsync(() -> goSync(actionType, with), executor);
         supplyAsync.exceptionally(
@@ -119,6 +119,12 @@ public interface IProcessor<D extends IDelegates, M extends IModel<D>, I, O> {
         public IProcessor<D, M, ?, ?> getParent() {
             return this.parent;
         }
+
+        @Override
+        public Collection<Class<? extends IProcessor<D, M, ?, ?>>> getProcessors() {
+            return Collections.emptyList();
+        }
+
     }
 
     public static interface IHandler<D extends IDelegates, M extends IModel<D>>
@@ -176,5 +182,4 @@ public interface IProcessor<D extends IDelegates, M extends IModel<D>, I, O> {
             }
         }
     }
-
 }

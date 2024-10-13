@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.a2a.commandcenter.IA2aOrchestrator.IA2aCommandCenterModel;
+import com.a2a.commandcenter.IA2aWorkflow.IA2aCommandCenterModel;
 import com.a2a.commandcenter.model.data.Session.SessionInfo;
 import com.a2a.commandcenter.model.data.UIInstruction.A2aActionBlock;
 import com.a2a.commandcenter.model.data.UIInstruction.A2aControlBlock;
@@ -26,6 +26,7 @@ public class A2aCommandCenterModel implements IA2aCommandCenterModel {
     @Setter
     public static class FlowData<T> {
         private FlowData<?> parent;
+
         public FlowData(String name, T value, FlowData<?> parent) {
             this.Name = name;
             this.value = value;

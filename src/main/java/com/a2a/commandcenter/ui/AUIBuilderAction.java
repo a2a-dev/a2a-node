@@ -3,7 +3,7 @@ package com.a2a.commandcenter.ui;
 import java.util.logging.Level;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
-import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.IA2aWorkflow.IA2aCCDelegates;
 import com.commandcenter.action.IAction.IUIDesignAction.UIDesignAction;
 import com.commandcenter.action.IProcessor.IHandler;
 

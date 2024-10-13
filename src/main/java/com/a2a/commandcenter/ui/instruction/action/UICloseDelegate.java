@@ -1,7 +1,7 @@
 package com.a2a.commandcenter.ui.instruction.action;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
-import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.IA2aWorkflow.IA2aCCDelegates;
 import com.a2a.commandcenter.model.data.Session.SessionInit;
 import com.commandcenter.action.IAction.IDataAction.DataAction;
 

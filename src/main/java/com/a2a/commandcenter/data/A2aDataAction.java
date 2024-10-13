@@ -1,4 +1,4 @@
-package com.a2a.commandcenter.ui;
+package com.a2a.commandcenter.data;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
 import com.a2a.commandcenter.IA2aWorkflow.IA2aCCDelegates;
@@ -9,4 +9,5 @@ public abstract class A2aDataAction<I, O> extends DataAction<IA2aCCDelegates, A2
     public A2aDataAction(A2aCommandCenterModel model) {
         super(model);
     }
+
 }

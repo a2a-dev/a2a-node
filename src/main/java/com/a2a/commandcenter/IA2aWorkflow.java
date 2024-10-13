@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.IA2aWorkflow.IA2aCCDelegates;
 import com.a2a.commandcenter.model.data.Session.SessionInfo;
 import com.a2a.commandcenter.model.data.Session.SessionInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
@@ -25,7 +25,7 @@ import com.commandcenter.IWorkflow;
  * @author Senthu
  */
 
-public interface IA2aOrchestrator extends IWorkflow<IA2aCCDelegates, A2aCommandCenterModel> {
+public interface IA2aWorkflow extends IWorkflow<IA2aCCDelegates, A2aCommandCenterModel> {
 
     public static interface IA2aCommandCenterModel extends IModel<IA2aCCDelegates> {
     }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.a2a.commandcenter.A2aCommandCenterModel;
-import com.a2a.commandcenter.IA2aOrchestrator.IA2aCCDelegates;
+import com.a2a.commandcenter.IA2aWorkflow.IA2aCCDelegates;
 import com.a2a.commandcenter.ui.ScreenShotInstructionHandler;
 import com.a2a.commandcenter.ui.instruction.DnDInstructionHandler;
 import com.a2a.commandcenter.ui.instruction.DoubleClickInstructionHandler;
