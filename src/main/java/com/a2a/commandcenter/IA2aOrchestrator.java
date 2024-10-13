@@ -18,14 +18,14 @@ import com.a2a.commandcenter.model.data.Session.SessionInit;
 import com.a2a.commandcenter.model.data.UIInstruction;
 import com.commandcenter.IModel;
 import com.commandcenter.IDelegates;
-import com.commandcenter.IWorkflowOrchestrator;
+import com.commandcenter.IWorkflow;
 
 /**
  *
  * @author Senthu
  */
 
-public interface IA2aOrchestrator extends IWorkflowOrchestrator<IA2aCCDelegates, A2aCommandCenterModel> {
+public interface IA2aOrchestrator extends IWorkflow<IA2aCCDelegates, A2aCommandCenterModel> {
 
     public static interface IA2aCommandCenterModel extends IModel<IA2aCCDelegates> {
     }
